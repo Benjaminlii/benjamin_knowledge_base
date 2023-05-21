@@ -29,6 +29,8 @@
 
 ### Pare 3: Update the application
 
+> https://docs.docker.com/get-started/03_updating_app/
+
 如何更新工程?
 可以在更新代码后,重新构建镜像,然后`docker run`启动.
 但是需要先停止并删除旧的容器,因为会涉及端口抢占的问题.
@@ -42,6 +44,8 @@ docker rm <container_id>
 然后重新执行`docker run`启动即可
 
 ### Pare 4: Share the application
+
+> https://docs.docker.com/get-started/04_sharing_app/
 
 在docker hub上可以创建一个仓库,用来存放某个工程的镜像
 
