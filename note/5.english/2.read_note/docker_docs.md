@@ -28,3 +28,27 @@
 	`docker ps` 该命令可以查看当前机器上所运行的容器，-a表示包含已停止的容器。
 
 ### Pare 3: Update the application
+
+如何更新工程?
+可以在更新代码后,重新构建镜像,然后`docker run`启动.
+但是需要先停止并删除旧的容器,因为会涉及端口抢占的问题.
+
+```dockerfile
+docker ps
+docker stop <container_id>
+docker rm <container_id>
+```
+
+然后重新执行`docker run`启动即可
+
+### Pare 4: Share the application
+
+在docker hub上可以创建一个仓库,用来存放某个工程的镜像
+
+```shell
+docker login -u <username> # 登陆到docker hub
+docker tag <image_name> <username/image_name> #给镜像重命名,username在推送时必须
+docker push <username/image_name> # 推送镜像到远端仓库
+```
+
+执行`docker run <username/image_name>`即可在另一台机器上运行实例
