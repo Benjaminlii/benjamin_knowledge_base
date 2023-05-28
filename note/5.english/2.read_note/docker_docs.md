@@ -56,3 +56,34 @@ docker push <username/image_name> # 推送镜像到远端仓库
 ```
 
 执行`docker run <username/image_name>`即可在另一台机器上运行实例
+
+### Pare 5: Persist the DB
+
+> https://docs.docker.com/get-started/05_persisting_data/
+
+在两个docker container之间，即使他们的启动镜像是同一个，他们的文件系统也都会是隔离的。这由docker的隔离机制决定。
+但可以通过挂载docker卷宗来将容器内的存储映射到宿主机上，从而实现多个容器数据的共享或复用。
+
+```shell
+# 创建docker卷宗
+docker volume create <volume_name>
+
+# 启动容器时进行挂载
+ docker run --mount type=volume,src=<volume_name>,target=<path_in_container> <image_name>
+
+# 查看卷宗属性 挂载点
+docker volume inspect <volume_name>
+eg:
+[
+    {
+        "CreatedAt": "2019-09-26T02:18:36Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/todo-db/_data",
+        "Name": "todo-db",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+```
+
