@@ -69,7 +69,7 @@ docker push <username/image_name> # 推送镜像到远端仓库
 docker volume create <volume_name>
 
 # 启动容器时进行挂载
- docker run --mount type=volume,src=<volume_name>,target=<path_in_container> <image_name>
+docker run --mount type=volume,src=<volume_name>,target=<path_in_container> <image_name>
 
 # 查看卷宗属性 挂载点
 docker volume inspect <volume_name>
@@ -85,5 +85,34 @@ eg:
         "Scope": "local"
     }
 ]
+
+# 可以在docker run中使用 `-v` 来直接创建并使用挂载卷
+docker run -v <volume_name>:<path_in_container> <image_name>
 ```
 
+### Pare 6: Use bind mounts
+
+> https://docs.docker.com/get-started/06_bind_mounts/
+
+除了上节提到的挂载卷之外，还可以通过绑定挂载的方式将容器内外的存储联系起来。其好处是更加灵活的选择主机中path的位置。（与之相比volume可以启动容器时向新的卷写入数据，并且支持更换挂载驱动，以支持将数据挂载到云端）
+
+```shell
+docker run -it --mount type=bind,src=<path_in_host>,target=<path_in_container> <image_name> 
+```
+
+### Para 7: Multi container apps
+
+> https://docs.docker.com/get-started/07_multi_container/
+
+在多应用的场景下，将不同的应用放置在不同的容器中保证容器的单一职责会是比较好的选择。那么又会引入一个问题：不同容器之间如何通信？
+
+Docker提供了容器网络来解决这一问题。
+
+```shell
+# 首先创建容器网络
+docker network create <network_name>
+# 启动容器
+docker run -d --network <network_name> --network-alias <host_name_in_network> <image_name>
+```
+
+运行上面的命令后，连接到同一容器网络的容器之间就可以通过 `host_name_in_network` 这个host来访问该容器
