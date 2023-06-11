@@ -116,3 +116,71 @@ docker run -d --network <network_name> --network-alias <host_name_in_network> <i
 ```
 
 运行上面的命令后，连接到同一容器网络的容器之间就可以通过 `host_name_in_network` 这个host来访问该容器
+
+### Para 8: Use Docker Compose
+
+> https://docs.docker.com/get-started/08_using_compose/
+
+Docker Compose 是一种定义多容器程序的工具，可以通过一个yml文件来定义一个程序中所需要启动的多个 Docker Container 。
+
+大致格式如下：
+
+```yml
+# docker-compose.yml
+version: '3'
+
+services:
+    app1:
+        image: node:18-alpine
+        command: sh -c "yarn install && yarn run dev"
+        build: ./dir
+        ports:
+            - 3000:3000
+        working_dir: /app
+        volumes:
+            - ./:/app
+        environment:
+            MYSQL_HOST: mysql
+            MYSQL_USER: root
+            MYSQL_PASSWORD: secret
+            MYSQL_DB: todos
+    
+    app2:
+        volumes:
+        - <volume_name>:/xxx
+
+volumes:
+  <volume_name>:
+```
+
+1. version
+指定本 yml 依从的 compose 哪个版本制定的。
+
+1. image
+当前容器的启动镜像
+
+1. command
+执行docker run后的命令
+```yml
+command: ["bundle", "exec", "thin", "-p", "3000"]
+```
+1. build
+定义构建工程所需要的相关参数
+    1. context：设置工程所在目录
+    1. dockerfile：指定构建镜像的 Dockerfile 文件名。（在context：设置工程所在目录下）
+    1. args：添加构建参数，这是只能在构建过程中访问的环境变量。
+
+1. ports
+指定端口开放及映射
+
+1. working_dir
+指定工作目录，相当于 docker run 的 -w
+
+1. volumes
+指定挂载卷
+
+1. environment
+向容器内添加环境变量
+
+通过命令 `docker compose up` 即可在当前目录下寻找 `docker-compose.yml` 启动程序。
+`docker compose down` 命令可以停止由 `docker-compose.yml` 启动的所有容器。
