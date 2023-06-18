@@ -8,6 +8,7 @@ by any chance       万一 碰巧 或许
 looking forward to  期待
 in order to         为了...
 rely on             依赖
+other than that     除此之外
 ```
 
 ## 2. abbreviation 缩写
@@ -40,6 +41,18 @@ silence     n. 沉默
             v. 使安静
 enhance     v. 增强
 scenarios   n. 设想, 可能发生的情况
+provide     v. 提供
+value       n. 值; 价值
+redundant   adj. 多余的
+debt        n. 债务
+introduce   v. 提出；介绍
+caption     n. 标题，说明文字，字幕
 
 protein     n. 蛋白质; 肽
+brave       adj. 勇敢的；华丽的
+            v. 勇敢面对
+            n. 勇士
+slack       adj. 松弛的
+            v. 懈怠；放松
+            n. 闲置部分
 ```

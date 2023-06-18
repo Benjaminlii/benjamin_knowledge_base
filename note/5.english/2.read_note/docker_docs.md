@@ -35,7 +35,7 @@
 可以在更新代码后,重新构建镜像,然后`docker run`启动.
 但是需要先停止并删除旧的容器,因为会涉及端口抢占的问题.
 
-```dockerfile
+```
 docker ps
 docker stop <container_id>
 docker rm <container_id>
@@ -181,3 +181,48 @@ command: ["bundle", "exec", "thin", "-p", "3000"]
 
 通过命令 `docker compose up` 即可在当前目录下寻找 `docker-compose.yml` 启动程序。
 `docker compose down` 命令可以停止由 `docker-compose.yml` 启动的所有容器。
+
+### Para 9: Image-building best practices
+
+> https://docs.docker.com/get-started/09_image_best/
+
+通过 `docker image history <image_id>` 命令可以查看镜像在构建过程中的每一个命令。
+
+#### 层缓存
+如下的一个dockerfile文件:
+
+```dockerfile
+# syntax=docker/dockerfile:1
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+```
+
+在每次构建都会拷贝代码，并安装依赖。那么每次更新代码重新打包镜像时，过程中生成的每一层镜像都是不一样的。这种情况下docker镜像在构建过程中最为耗时的操作是安装镜像，但是大多数情况下依赖项并不会发生变化。
+
+在这种情况下，将dockerfile做以下改动：
+
+1. 在构建一开始并不拷贝整个仓库进镜像，而是指拷贝依赖定义文件 `package.json`。
+1. 在 `yarn install --production` 安装好依赖后再拷贝仓库。
+1. 在dockerfile文件错在目录下创建一个 `.dockerignore` 文件，在这个文件中定义在构建过程中拷贝文件时忽略 `node_modules` 文件，这样就可以忽略掉依赖文件的拷贝。
+
+做完以上的改动，docker在构建镜像的过程中，会先去拷贝依赖定义文件，然后安装命令，然后再拷贝除依赖项的其他所有文件。
+
+这样做的好处是在拷贝仓库之前（这一步得到的结果大概率每一次都不同），每一步运行的结果可以复用，就可以避免重复的进行依赖下载。
+
+#### 多阶段构建
+
+在dockerfile中可以有如下的定义
+
+```dockerfile
+FROM iname_id_1 AS build
+DO_SOMETHING
+
+FROM iname_id_2
+COPY --from=build xxx xxx
+DO_SOMETHING
+```
+
+上面的dockerfile在构建镜像的过程中会先根据镜像 `iname_id_1` 去进行第一阶段的构建，并在后续的构建过程中可以使用 `COPY --from=build` 从第一阶段构建的结果中拷贝文件。除最后一阶段构建的结果之外，前面的构建的所有文件都不会被保存在最终的输出镜像中。
