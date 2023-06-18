@@ -204,7 +204,7 @@ CMD ["node", "src/index.js"]
 
 在这种情况下，将dockerfile做以下改动：
 
-1. 在构建一开始并不拷贝整个仓库进镜像，而是指拷贝依赖定义文件 `package.json`。
+1. 在构建一开始并不拷贝整个仓库进镜像，而是只拷贝依赖定义文件 `package.json`。
 1. 在 `yarn install --production` 安装好依赖后再拷贝仓库。
 1. 在dockerfile文件错在目录下创建一个 `.dockerignore` 文件，在这个文件中定义在构建过程中拷贝文件时忽略 `node_modules` 文件，这样就可以忽略掉依赖文件的拷贝。
 
@@ -217,12 +217,12 @@ CMD ["node", "src/index.js"]
 在dockerfile中可以有如下的定义
 
 ```dockerfile
-FROM iname_id_1 AS build
+FROM image_id_1 AS build
 DO_SOMETHING
 
-FROM iname_id_2
+FROM image_id_2
 COPY --from=build xxx xxx
 DO_SOMETHING
 ```
 
-上面的dockerfile在构建镜像的过程中会先根据镜像 `iname_id_1` 去进行第一阶段的构建，并在后续的构建过程中可以使用 `COPY --from=build` 从第一阶段构建的结果中拷贝文件。除最后一阶段构建的结果之外，前面的构建的所有文件都不会被保存在最终的输出镜像中。
+上面的dockerfile在构建镜像的过程中会先根据镜像 `image_id_1` 去进行第一阶段的构建，并在后续的构建过程中可以使用 `COPY --from=build` 从第一阶段构建的结果中拷贝文件。除最后一阶段构建的结果之外，前面的构建的所有文件都不会被保存在最终的输出镜像中。
