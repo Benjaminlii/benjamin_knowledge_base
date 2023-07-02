@@ -75,4 +75,12 @@ increasingly    adv. 越来越多地
 capture         v. 捕获
                 n. 捕获物
 react           v. 反应
+protein     n. 蛋白质; 肽
+brave       adj. 勇敢的；华丽的
+            v. 勇敢面对
+            n. 勇士
+slack       adj. 松弛的
+            v. 懈怠；放松
+            n. 闲置部分
+retro       n. 复旧，怀旧
 ```
