@@ -83,4 +83,8 @@ slack       adj. 松弛的
             v. 懈怠；放松
             n. 闲置部分
 retro       n. 复旧，怀旧
+perhaps     adv. 或许
+            n. 猜想
+rotate      v. 旋转;轮换
+            adj. 辐射状的          
 ```
