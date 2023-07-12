@@ -22,7 +22,7 @@
 	在rocketMq中，发送来的消息都会写入CommitLog文件，broker中维护了ConsumerQueue（多对一的对应一个Topic），其中存储的节点中包含指向一条消息的指针
 	另外还维护了一个IndexFile文件，用来存储了发送时间等辅助信息来做筛选。
 
-<img src="/Users/benjamin/code/benjamin_knowledge_base/resource/3.middleware/5.rocketmq/2.png" style="zoom: 33%;" />
+<img src="../../../resource/3.middleware/5.rocketmq/2.png" style="zoom: 33%;" />
 	既然维护了文件存储，那么就需要考虑内存写入磁盘的机制。rocketMq提供了同步刷盘和异步刷盘两种方式。同步刷盘即用户send请求中，rocketmq会将信息写入内存，然后写入磁盘，写入成功后才返回。异步刷盘在信息写入内存中就会返回，由另一个线程将内存中的数据异步写入磁盘。那么很显然，同步刷盘的方式能避免宕机导致的数据丢失，异步刷盘不可以。
 <img src="../../../resource/3.middleware/5.rocketmq/3.png" style="zoom:50%;" />
 
