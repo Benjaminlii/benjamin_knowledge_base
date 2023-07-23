@@ -90,4 +90,6 @@ rotate      v. 旋转; 轮换
 effort      n. 努力; 工作
 unify       adj. 统一的
 generic     adj. 通用的; 一般的
+risk        n. 危险，风险;
+            v. 冒...的风险; 使遭受危险
 ```
