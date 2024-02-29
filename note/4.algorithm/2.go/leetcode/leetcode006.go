@@ -30,31 +30,31 @@ import "fmt"
 // 输出："A"
 
 func convert(s string, numRows int) string {
-	arrs := [][]rune{}
-	for i := 0; i < numRows; i++ {
-		arrs = append(arrs, []rune{})
-	}
-	flag := 1
-	indexOfArr := 0
-	for _, char := range s {
-		arrs[indexOfArr] = append(arrs[indexOfArr], char)
-		if numRows == 1 {
-			continue
-		}
-		indexOfArr += flag
-		if indexOfArr == 0 || indexOfArr == numRows-1 {
-			flag *= -1
-		}
-	}
-	ans := []rune{}
-	for i := 0; i < numRows; i++ {
-		ans = append(ans, arrs[i]...)
-	}
-	return string(ans)
+    arrs := [][]rune{}
+    for i := 0; i < numRows; i++ {
+        arrs = append(arrs, []rune{})
+    }
+    flag := 1
+    indexOfArr := 0
+    for _, char := range s {
+        arrs[indexOfArr] = append(arrs[indexOfArr], char)
+        if numRows == 1 {
+            continue
+        }
+        indexOfArr += flag
+        if indexOfArr == 0 || indexOfArr == numRows-1 {
+            flag *= -1
+        }
+    }
+    ans := []rune{}
+    for i := 0; i < numRows; i++ {
+        ans = append(ans, arrs[i]...)
+    }
+    return string(ans)
 }
 
 func main() {
-	// fmt.Println(convert("PAYPALISHIRING", 3) == "PAHNAPLSIIGYIR")
-	// fmt.Println(convert("PAYPALISHIRING", 4) == "PINALSIGYAHRPI")
-	fmt.Println(convert("AB", 1) == "AB")
+    // fmt.Println(convert("PAYPALISHIRING", 3) == "PAHNAPLSIIGYIR")
+    // fmt.Println(convert("PAYPALISHIRING", 4) == "PINALSIGYAHRPI")
+    fmt.Println(convert("AB", 1) == "AB")
 }

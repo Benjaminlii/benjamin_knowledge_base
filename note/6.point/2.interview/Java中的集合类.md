@@ -73,11 +73,11 @@ public HashMap(Map<? extends K, ? extends V> m) {
 }
 ```
 
-​		如果指定容量的话,会先进行判断容量不能小于0,否则抛异常.不能大于容量极限,否则还是使用容量极限.
+​如果指定容量的话,会先进行判断容量不能小于0,否则抛异常.不能大于容量极限,否则还是使用容量极限.
 
-​		指定负载因子的话不能为0或者null.
+​指定负载因子的话不能为0或者null.
 
-​		制定了容量的话,会直接根据设置的值获取下一个2的幂数,作为下一次扩容的目标容积(使用threshold存储第一次初始化前的体积,这个值本来用来存放阀值的真实值).==当前map不进行插入操作的话是一直没有容积的==,等待第一次插入,会将容积扩展至threshold的大小,然后更新loadFactor为新的容积,更新threshold为容积的阀值倍.
+​制定了容量的话,会直接根据设置的值获取下一个2的幂数,作为下一次扩容的目标容积(使用threshold存储第一次初始化前的体积,这个值本来用来存放阀值的真实值).==当前map不进行插入操作的话是一直没有容积的==,等待第一次插入,会将容积扩展至threshold的大小,然后更新loadFactor为新的容积,更新threshold为容积的阀值倍.
 
 ### (2). hash函数
 
@@ -89,7 +89,7 @@ static final int hash(Object key) {
 }
 ```
 
-​		这样做的理由是从数学角度上讲可以降低哈希冲突的发生
+​这样做的理由是从数学角度上讲可以降低哈希冲突的发生
 
 ### (3). put()方法
 
@@ -287,7 +287,7 @@ final Node<K,V>[] resize() {
                 else {
                     // 构造两条链表
                     // 原链表中有一部分需要向后移动n位(n是扩容的容积变化量,也是扩容前的容积)
-				// 如果n = 2^x
+                    // 如果n = 2^x
                     // 那么一个数组元素中的链表上的元素的hash值后x位全部都是一样的
                     // 因为从hash值到数组下表是通过对n取余(也就是对n-1进行按位与)获得的
                     // 所以后n位是一致的
@@ -345,7 +345,7 @@ final Node<K,V>[] resize() {
 
 ## 2. ArrayList
 
-​		ArrayList使用数组实现
+​ArrayList使用数组实现
 
 ### (1). 常量和构造方法
 
@@ -518,13 +518,13 @@ private static int hugeCapacity(int minCapacity) {
 
 ## 3. HashSet
 
-​		内部使用HashMap实现,使用HashMap的key存储元素,所以不可能出现重复(value为一个静态常量Object).
+​内部使用HashMap实现,使用HashMap的key存储元素,所以不可能出现重复(value为一个静态常量Object).
 
 ## 4. Hashtable
 
-​		内部与HashMap实现类似,略有不同.
+​内部与HashMap实现类似,略有不同.
 
-​		t就是小写的,在Java驼峰命名法出现之前,Hashtable就存在了.
+​t就是小写的,在Java驼峰命名法出现之前,Hashtable就存在了.
 
 ### (1). 与HashMap区别
 
@@ -607,12 +607,12 @@ private void addEntry(int hash, K key, V value, int index) {
     if (count >= threshold) {
         // 如果容量大于阈值,扩容
         rehash();
-		// 扩容后重新hash
+        // 扩容后重新hash
         tab = table;
         hash = key.hashCode();
         index = (hash & 0x7FFFFFFF) % tab.length;
     }
-	
+
     // 头插法
     @SuppressWarnings("unchecked")
     Entry<K,V> e = (Entry<K,V>) tab[index];
@@ -645,14 +645,14 @@ protected void rehash() {
     // 计算新的阈值,不能超过极限大小
     threshold = (int)Math.min(newCapacity * loadFactor, MAX_ARRAY_SIZE + 1);
     table = newMap;
-	// 放置原数组中的元素
+    // 放置原数组中的元素
     // 遍历原数组中的单元格
     for (int i = oldCapacity ; i-- > 0 ;) {
         // 遍历每一个单元格的链表
         for (Entry<K,V> old = (Entry<K,V>)oldMap[i] ; old != null ; ) {
             Entry<K,V> e = old;
             old = old.next;
-			// 重新hash,插入元素到新的位置(还是头插法)
+            // 重新hash,插入元素到新的位置(还是头插法)
             int index = (e.hash & 0x7FFFFFFF) % newCapacity;
             e.next = (Entry<K,V>)newMap[index];
             newMap[index] = e;
@@ -701,7 +701,7 @@ public synchronized V get(Object key) {
     Entry<?,?> tab[] = table;
     int hash = key.hashCode();
     int index = (hash & 0x7FFFFFFF) % tab.length;
-	// 遍历对应下标处的链表
+// 遍历对应下标处的链表
     for (Entry<?,?> e = tab[index] ; e != null ; e = e.next) {
         if ((e.hash == hash) && e.key.equals(key)) {
             return (V)e.value;
@@ -767,67 +767,67 @@ public synchronized V get(Object key) {
 
 #### 1). JDK1.7中:
 
-​		线程安全的HashMap,内部使用锁分段技术,将内部数据分为一段一段,每一段配一把锁,当其中一个端被访问时,其他段也能被访问.
+​线程安全的HashMap,内部使用锁分段技术,将内部数据分为一段一段,每一段配一把锁,当其中一个端被访问时,其他段也能被访问.
 
-​		一个ConcurrentHashMap内部维护了多个segment(默认为16,可以修改,但不可以动态扩容),每一个segment都是ReentrantLock的子类,所以有加锁的功能.每一个segment内部又维护了一个HashEntry数组(这个可以扩容).也就是说,一个ConcurrentHashMap将哈希表分为多段,每一段都放在锁对象中.每一个segment都记录了当前segment的元素数和被更新次数.
+​一个ConcurrentHashMap内部维护了多个segment(默认为16,可以修改,但不可以动态扩容),每一个segment都是ReentrantLock的子类,所以有加锁的功能.每一个segment内部又维护了一个HashEntry数组(这个可以扩容).也就是说,一个ConcurrentHashMap将哈希表分为多段,每一段都放在锁对象中.每一个segment都记录了当前segment的元素数和被更新次数.
 
-​		在进行put操作时,先根据hash值确定要放入哪一个segment,获取这个segment的锁(如果没有成功获取到则进行自旋重新竞争,自旋达到一定次数,阻塞当前线程,直到这个锁被释放),然后在这个segment中再根据hash值确定桶的位置(如果这个segment没有被定义,那么先进行初始化).
+​在进行put操作时,先根据hash值确定要放入哪一个segment,获取这个segment的锁(如果没有成功获取到则进行自旋重新竞争,自旋达到一定次数,阻塞当前线程,直到这个锁被释放),然后在这个segment中再根据hash值确定桶的位置(如果这个segment没有被定义,那么先进行初始化).
 
-​		get方法类似,也是先确定segment,在确定元素在内部的位置,然后在进行查找.(内部实现和HashMap是相似的,也要经历链表查找等过程,不会进行树化),这里也是分读写锁的,读锁不和任何锁互斥.map都是单个读取,所以写操作不会影响读操作的结果.
+​get方法类似,也是先确定segment,在确定元素在内部的位置,然后在进行查找.(内部实现和HashMap是相似的,也要经历链表查找等过程,不会进行树化),这里也是分读写锁的,读锁不和任何锁互斥.map都是单个读取,所以写操作不会影响读操作的结果.
 
-​		size()方法获取元素数,对每一个segment的元素总数和被修改次数进行统计,然后在进行一次这个过程,如果被修改次数没有发生变化,那么就证明在两次统计中,没有发生元素的增加和删除(由于被修改次数是在进行增加或者删除操作之前就会更新的,所以更能保证实时性).这个过程重复一定次数都没能成功判定的话,会对所有segment进行加锁,然后进行统计.
+​size()方法获取元素数,对每一个segment的元素总数和被修改次数进行统计,然后在进行一次这个过程,如果被修改次数没有发生变化,那么就证明在两次统计中,没有发生元素的增加和删除(由于被修改次数是在进行增加或者删除操作之前就会更新的,所以更能保证实时性).这个过程重复一定次数都没能成功判定的话,会对所有segment进行加锁,然后进行统计.
 
-​		锁使用的是segment继承于ReentrantLock的锁,内部使用AQS.
+​锁使用的是segment继承于ReentrantLock的锁,内部使用AQS.
 
 #### 2). JDK1.8中:
 
-​		在JDK1.7中已经满足n(默认16)的并发量,但当数据量上去之后,并发性能还是不够好.就抛弃了分段锁的设计.转而使用CAS+sync的加锁方式
+​在JDK1.7中已经满足n(默认16)的并发量,但当数据量上去之后,并发性能还是不够好.就抛弃了分段锁的设计.转而使用CAS+sync的加锁方式
 
-​		put操作中,如果桶中不需要初始化,不是桶中无元素(这时使用CAS进行原子性的插入,竞争失败的线程自旋,进入其他逻辑.这里CAS,考虑一下[经典的ABA问题与解决方法](https://blog.csdn.net/qq_42576040/article/details/88240595))或者扩容状态(也就是==桶中存储的是node==,这个node包括很多种,可以是单个元素,可以使链表,也可以是红黑树,这个红黑树是和JDK1.8中的红黑树一起引入的,所以JDK1.7中的ConcurrentHashMap是没有红黑树的),==加sync锁进行元素的插入==
+​put操作中,如果桶中不需要初始化,不是桶中无元素(这时使用CAS进行原子性的插入,竞争失败的线程自旋,进入其他逻辑.这里CAS,考虑一下[经典的ABA问题与解决方法](https://blog.csdn.net/qq_42576040/article/details/88240595))或者扩容状态(也就是==桶中存储的是node==,这个node包括很多种,可以是单个元素,可以使链表,也可以是红黑树,这个红黑树是和JDK1.8中的红黑树一起引入的,所以JDK1.7中的ConcurrentHashMap是没有红黑树的),==加sync锁进行元素的插入==
 
-​		get操作还是不加锁
+​get操作还是不加锁
 
-​		由于JDK6对synchronize进行了优化,所以性能上可以保证
+​由于JDK6对synchronize进行了优化,所以性能上可以保证
 
 ### (6). Vactor
 
-​		类似于ArrayList,但是Vactor是线程安全的
+​类似于ArrayList,但是Vactor是线程安全的
 
-​		Vactor二倍扩容
+​Vactor二倍扩容
 
-​		Vactor性能差一些,因为内部使用了synchronized方法
+​Vactor性能差一些,因为内部使用了synchronized方法
 
 ### (7). TreeMap
 
-​		带顺序的Map,内部使用红黑树实现
+​带顺序的Map,内部使用红黑树实现
 
-​		要保证顺序就使得程序运行效率贬低了,树中的插入,保持平衡等因素
+​要保证顺序就使得程序运行效率贬低了,树中的插入,保持平衡等因素
 
 ### (8). Collections.synchronizedMap(Map)创建线程安全的map集合
 
-​		这也是实现线程安全的Map的一种方式,传入一个普通Map,返回一个线程安全的Map.
+​这也是实现线程安全的Map的一种方式,传入一个普通Map,返回一个线程安全的Map.
 
-​		返回的线程安全的Map中的方法实际上是调用传入的这个Map的各个方法,每个方法内部都使用sync代码块进行了同步.
+​返回的线程安全的Map中的方法实际上是调用传入的这个Map的各个方法,每个方法内部都使用sync代码块进行了同步.
 
-​		mutex是锁对象,可以由构造方法传入,默认为this
+​mutex是锁对象,可以由构造方法传入,默认为this
 
 ## 6. 集合的优点
 
-​		复用性
+​复用性
 
-​		降低维护成本
+​降低维护成本
 
 ## 7. 集合的层次结构
 
-​		Collection		map
+​Collection map
 
-​		set和list
+​set和list
 
 ## 8. 迭代器
 
-​		HashMap 中的 Iterator 迭代器是 fail-fast 的，而 Hashtable 的 Enumerator 不是 fail-fast 的。
+​HashMap 中的 Iterator 迭代器是 fail-fast 的，而 Hashtable 的 Enumerator 不是 fail-fast 的。
 
-​		所以，当其他线程改变了HashMap 的结构，如：增加、删除元素，将会抛出ConcurrentModificationException 异常，而 Hashtable 则不会。
+​所以，当其他线程改变了HashMap 的结构，如：增加、删除元素，将会抛出ConcurrentModificationException 异常，而 Hashtable 则不会。
 
 >   fail-fast是啥？
 

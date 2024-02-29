@@ -8,29 +8,29 @@
 
 ## 1. IOC和AOP
 
-​		首先英文缩写记清楚,不要念错
+​首先英文缩写记清楚,不要念错
 
 ### (1). IOC
 
-​		IOC(Inversion of Control),从字面上理解就是==控制反转==，将对在自身对象中的一个内置对象的控制权反转。所谓的反转，即==把内置对象的控制权反转给一个容器==，而应用程序只需要提供对象的类型即可。IOC是面向对象编程的一种设计原则.可以用来==降低代码之间的耦合==.大致含义就是在代码中需要使用一个对象时,并不是立即new一个对象出来,而是从一个调控系统内所有对象的外界实体,也就是容器中将这个对象的一个实体传递到调用处接收的位置.对象的实体在容器加载时就已经被创建.而且对象的创建与当前代码的运行解耦合了.
+​IOC(Inversion of Control),从字面上理解就是==控制反转==，将对在自身对象中的一个内置对象的控制权反转。所谓的反转，即==把内置对象的控制权反转给一个容器==，而应用程序只需要提供对象的类型即可。IOC是面向对象编程的一种设计原则.可以用来==降低代码之间的耦合==.大致含义就是在代码中需要使用一个对象时,并不是立即new一个对象出来,而是从一个调控系统内所有对象的外界实体,也就是容器中将这个对象的一个实体传递到调用处接收的位置.对象的实体在容器加载时就已经被创建.而且对象的创建与当前代码的运行解耦合了.
 
-​		==依赖注入==(Dependency Injection,即DI),容器中的对象所需要的依赖来自于配置文件(xml)中的配置,也就是由容器去完成依赖项的添加.就是==在xml文件中配置好类的属性==.Spring中需要依赖项属性的set和get方法.Spring的IOC有三种注入方式 ：构造器注入、setter方法注入、根据注解注入。
+​==依赖注入==(Dependency Injection,即DI),容器中的对象所需要的依赖来自于配置文件(xml)中的配置,也就是由容器去完成依赖项的添加.就是==在xml文件中配置好类的属性==.Spring中需要依赖项属性的set和get方法.Spring的IOC有三种注入方式 ：构造器注入、setter方法注入、根据注解注入。
 
-​		==依赖查找==(Dependency Lookup,即DL),是指在容器中对象的类中,手动将依赖项从容器中取出,设置依赖项.实际项目中使用容器对象(@Autowired不是依赖查找,而是通过扫描注解,在容器内部进行依赖的注入,没有手动配置罢了)进行依赖项的查找.
+​==依赖查找==(Dependency Lookup,即DL),是指在容器中对象的类中,手动将依赖项从容器中取出,设置依赖项.实际项目中使用容器对象(@Autowired不是依赖查找,而是通过扫描注解,在容器内部进行依赖的注入,没有手动配置罢了)进行依赖项的查找.
 
 ### (2). AOP
 
-​		AOP(Aspect Oriented Programming),意为==面向切面编程==.是通过预编译和运行时动态代理的方式==实现程序功能的统一维护==的技术(何为维护参考事务).中文的这种翻译带有略微的一些误导性,切面主要是指将程序维护代码中先行执行部分和后续执行部分之间插入用户代码的位置,就像在一个方法中切入一个过程一样.
+​AOP(Aspect Oriented Programming),意为==面向切面编程==.是通过预编译和运行时动态代理的方式==实现程序功能的统一维护==的技术(何为维护参考事务).中文的这种翻译带有略微的一些误导性,切面主要是指将程序维护代码中先行执行部分和后续执行部分之间插入用户代码的位置,就像在一个方法中切入一个过程一样.
 
-​		AOP可以在不修改源代码的情况下,通过预编译和运行期动态代理实现给程序统一添加功能.
+​AOP可以在不修改源代码的情况下,通过预编译和运行期动态代理实现给程序统一添加功能.
 
-​		利用AOP还可以对业务逻辑的各个部分(将日志,性能统计,事务处理等等功能提取出来)进行隔离,降低耦合度.
+​利用AOP还可以对业务逻辑的各个部分(将日志,性能统计,事务处理等等功能提取出来)进行隔离,降低耦合度.
 
-​		==Spring的AOP通过动态代理实现==,底层实现使用JDK代理(只提供接口的代理，不支持类的代理)或者Cglib(生成指定类的一个子类对象)实现.主要思想就是通过==获取实例对象的动态代理对象==(代理是指代理对象内部有实例对象作为成员变量,代理对象可以调用实例变量的方法),==在代理对象中对实例对象的方法再次进行封装==,但封装的内部会==在调用前后进行一些逻辑上的处理==,如开启关闭事务,打印日志等等.
+​==Spring的AOP通过动态代理实现==,底层实现使用JDK代理(只提供接口的代理，不支持类的代理)或者Cglib(生成指定类的一个子类对象)实现.主要思想就是通过==获取实例对象的动态代理对象==(代理是指代理对象内部有实例对象作为成员变量,代理对象可以调用实例变量的方法),==在代理对象中对实例对象的方法再次进行封装==,但封装的内部会==在调用前后进行一些逻辑上的处理==,如开启关闭事务,打印日志等等.
 
 >   Spring的AOP通过动态代理实现,底层实现使用JDK代理(只提供接口的代理，不支持类的代理)或者Cglib(生成指定类的一个子类对象)实现( JDK 本身只提供接口的代理，而不支持类的代理；而 CGLib 很好的弥补了这点，它通过创建子类，在子类中拦截父类的方法并织入横切逻辑，实现对类的代理，但是其不能对目标类中的 final 或 private 方法进行代理，因为被 final 或 private 修饰的方法不能被继承。
 
-​		实际上我们调用的是代理对象的方法.在其内部做了处理后又调用了原来实例对象的方法.
+​实际上我们调用的是代理对象的方法.在其内部做了处理后又调用了原来实例对象的方法.
 
 #### 1). 概念解释
 
@@ -55,21 +55,21 @@ public static Service createService(){
     
     /* 代理类
          * Proxy.newProxyInstance
-         * 	    参数1：loader ，类加载器，动态代理类 运行时创建，任何类都需要类加载器将其加载到内存。
-         * 			一般情况：当前类.class.getClassLoader();
-         * 				目标类实例.getClass().get...
-         * 	 	参数2：Class[] interfaces 代理类需要实现的所有接口
-         * 	 			方式1：目标类实例.getClass().getInterfaces()  ;
-         *							注意：只能获得自己接口，不能获得父元素接口
-         * 	 			方式2：new Class[]{UserService.class}
-         * 	 			例如：jdbc 驱动  --> DriverManager  获得接口 Connection
-         * 	 	参数3：InvocationHandler  处理类，接口，必须进行实现类，一般采用匿名内部
-         * 	 		提供 invoke 方法，代理类的每一个方法执行时，都将调用一次invoke
-         * 	 			参数31：Object proxy ：代理对象
-         * 	 			参数32：Method method : 代理对象当前执行的方法的描述对象（反射）
-         * 	 				执行方法名：method.getName()
-         * 	 				执行方法：method.invoke(对象，实际参数)
-         * 	 			参数33：Object[] args :方法实际参数
+         *     参数1：loader ，类加载器，动态代理类 运行时创建，任何类都需要类加载器将其加载到内存。
+         *     一般情况：当前类.class.getClassLoader();
+         *             目标类实例.getClass().get...
+         *     参数2：Class[] interfaces 代理类需要实现的所有接口
+         *         方式1：目标类实例.getClass().getInterfaces()  ;
+         *             注意：只能获得自己接口，不能获得父元素接口
+         *         方式2：new Class[]{UserService.class}
+         *             例如：jdbc 驱动  --> DriverManager  获得接口 Connection
+         *     参数3：InvocationHandler  处理类，接口，必须进行实现类，一般采用匿名内部
+         *         提供 invoke 方法，代理类的每一个方法执行时，都将调用一次invoke
+         *         参数31：Object proxy ：代理对象
+         *         参数32：Method method : 代理对象当前执行的方法的描述对象（反射）
+         *             执行方法名：method.getName()
+         *             执行方法：method.invoke(对象，实际参数)
+         *         参数33：Object[] args :方法实际参数
          */
     Service proxy = (Service) Proxy.newProxyInstance(
         MyBeanFactory.class.getClassLoader(),// 本类的类加载器
@@ -103,7 +103,7 @@ public static Service createService(){
 
 ## 2. BeanFactory和ApplicationContext
 
-​		都可以做Spring的容器,其中ApplicationContext是BeanFactory的子接口.
+​都可以做Spring的容器,其中ApplicationContext是BeanFactory的子接口.
 
 BeanFactory实现的功能:
 
@@ -126,105 +126,105 @@ ApplicationContext在BeanFactory的基础上还提供了更完整的框架功能
 
 ### (1). ==实例化Bean==
 
-​		对于BeanFactory,当客户端请求一个未被初始化的bean时,容器获取对象中的信息,进行实例化
+​对于BeanFactory,当客户端请求一个未被初始化的bean时,容器获取对象中的信息,进行实例化
 
-​		对于ApplicationContext,容器一启动,就获取所有对象的信息,进行初始化
+​对于ApplicationContext,容器一启动,就获取所有对象的信息,进行初始化
 
 ### (2). 设置对象属性(==依赖注入==)
 
-​		实例化完成后的对象被封装在BeanWrapper(BeanWrapperImpl在内部使用Spring的BeanUtils工具类对Bean进行反射操作，设置属性。)中,根据配置的信息,进行依赖的填充.
+​实例化完成后的对象被封装在BeanWrapper(BeanWrapperImpl在内部使用Spring的BeanUtils工具类对Bean进行反射操作，设置属性。)中,根据配置的信息,进行依赖的填充.
 
 ### (3). ==处理Aware接口==
 
-​		Spring检查该对象是否实现了xxxAware接口,并将相关的xxxAware实例注入给Bean:
+​Spring检查该对象是否实现了xxxAware接口,并将相关的xxxAware实例注入给Bean:
 
 1.  如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的就是Spring配置文件中Bean的id值；
 1.  如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()方法，传递的是Spring工厂自身。
 1.  如果这个Bean已经实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文；
 
-​		所以BeanNameAware接口是为了让自身Bean能够感知到，获取到自身在Spring容器中的id属性。
+​所以BeanNameAware接口是为了让自身Bean能够感知到，获取到自身在Spring容器中的id属性。
 
-​		同理，其他的==Aware接口也是为了能够感知到自身的一些属性==。
+​同理，其他的==Aware接口也是为了能够感知到自身的一些属性==。
 
-​		比如实现了ApplicationContextAware接口的类，能够获取到ApplicationContext，实现了BeanFactoryAware接口的类，能够获取到BeanFactory对象。
+​比如实现了ApplicationContextAware接口的类，能够获取到ApplicationContext，实现了BeanFactoryAware接口的类，能够获取到BeanFactory对象。
 
 ### (4). BeanPostProcessor接口的before处理
 
-​		调用BeanPostProcessor接口实现的postProcess==Before==Initialization(Object bean, String beanName)方法,进行一些==初始化前的前置处理==.
+​调用BeanPostProcessor接口实现的postProcess==Before==Initialization(Object bean, String beanName)方法,进行一些==初始化前的前置处理==.
 
-​		这个方法传入bean对象和其名字.并将返回的对象设置为bean.
+​这个方法传入bean对象和其名字.并将返回的对象设置为bean.
 
-​		可以用于进行原对象和代理对象的替换,修改bean的属性等功能的实现.
+​可以用于进行原对象和代理对象的替换,修改bean的属性等功能的实现.
 
 ### (5). InitializingBean
 
-​		==初始化时会附加进行的操作==
+​==初始化时会附加进行的操作==
 
-​		如果bean实现了 InitializingBean 接口,会调用 void afterPropertiesSet() 方法进行初始化
+​如果bean实现了 InitializingBean 接口,会调用 void afterPropertiesSet() 方法进行初始化
 
 ### (6). init-method
 
-​		bean在Spring配置文件中配置了init-method属性，则会自动调用其配置的初始化方法
+​bean在Spring配置文件中配置了init-method属性，则会自动调用其配置的初始化方法
 
-​		如果同时实现了,那么先进行接口方法的调用,在进行配置文件中指定方法的调用	
+​如果同时实现了,那么先进行接口方法的调用,在进行配置文件中指定方法的调用
 
 ### (6). BeanPostProcessor接口
 
-​		调用BeanPostProcessor接口实现的postProcess==After==Initialization(Object bean, String beanName)方法,进行一些初始化前的==后置处理==.
+​调用BeanPostProcessor接口实现的postProcess==After==Initialization(Object bean, String beanName)方法,进行一些初始化前的==后置处理==.
 
-​		与(4)对应.
+​与(4)对应.
 
 ------
 
-​		到这里bean就已经被正确的创建了.
+​到这里bean就已经被正确的创建了.
 
 ------
 
 ### (7). DisposableBean
 
-​		==清理bean时会附加进行的操作.==
+​==清理bean时会附加进行的操作.==
 
-​		当bean不再被需要的时候,会经历清理阶段.
+​当bean不再被需要的时候,会经历清理阶段.
 
-​		如果bean实现了DisposableBean这个接口,会调用其实现的void destroy()方法
+​如果bean实现了DisposableBean这个接口,会调用其实现的void destroy()方法
 
 ### (8). destroy-method
 
-​		同样，在对象销毁有一个参数配置destroy-method，和init-method相同，在调用销毁的时候，先执行 DisposableBean的destroy方法，后执行 destroy-method声明的方法。
+​同样，在对象销毁有一个参数配置destroy-method，和init-method相同，在调用销毁的时候，先执行 DisposableBean的destroy方法，后执行 destroy-method声明的方法。
 
 ## 4. spring支持的bean的作用域
 
 ### (1). singleton
 
-​		默认,单例模式
+​默认,单例模式
 
-​		一般的开发中,并不会在bean中加入可变的成员变量,所以即使单例模式下没有进行任何的多线程同步处理,也是线程安全的,但要明白原因.
+​一般的开发中,并不会在bean中加入可变的成员变量,所以即使单例模式下没有进行任何的多线程同步处理,也是线程安全的,但要明白原因.
 
 ### (2). prototype
 
-​		多例模式,只要请求bean,就生成一个实例
+​多例模式,只要请求bean,就生成一个实例
 
 ### (3). request
 
-​		为每个请求生成不同的实例
+​为每个请求生成不同的实例
 
 ### (4). session
 
-​		为每个会话生成不同的实例
+​为每个会话生成不同的实例
 
 ### (5). global-session
 
-​		global session作用域类似于标准的HTTP Session作用域，不过它仅仅==在基于portlet的web应用中才有意义==。Portlet规范定义了全局Session的概念，它被所有构成某个portlet web应用的各种不同的portlet所共享。在global session作用域中定义的bean被限定于全局portlet Session的生命周期范围内。
+​global session作用域类似于标准的HTTP Session作用域，不过它仅仅==在基于portlet的web应用中才有意义==。Portlet规范定义了全局Session的概念，它被所有构成某个portlet web应用的各种不同的portlet所共享。在global session作用域中定义的bean被限定于全局portlet Session的生命周期范围内。
 
 >   portlet类似servlet,是另一套解决方案
 
 ## 5. spring如何处理线程并发问题
 
-​		在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中非线程安全状态采用ThreadLocal进行处理，解决线程安全问题。
+​在Spring中，绝大部分Bean都可以声明为singleton作用域，因为Spring对一些Bean中非线程安全状态采用ThreadLocal进行处理，解决线程安全问题。
 
-​		Spring 中的 一些bean, 如 RequestContextHolder、TransactionSynchronizationManager、LocaleContextHolder 等非线程安全的“状态性对象”采用ThreadLocal进行封装，让他们也称为线程安全的“状态性对象”，因此有状态的bean就能够以singleton的方式在多线程环境中正常工作。
+​Spring 中的 一些bean, 如 RequestContextHolder、TransactionSynchronizationManager、LocaleContextHolder 等非线程安全的“状态性对象”采用ThreadLocal进行封装，让他们也称为线程安全的“状态性对象”，因此有状态的bean就能够以singleton的方式在多线程环境中正常工作。
 
-​		Spring中DAO和Service都是以单实例的bean形式存在，Spring通过ThreadLocal类将有状态的变量（例如数据库连接Connection）本地线程化，从而做到多线程状况下的安全。
+​Spring中DAO和Service都是以单实例的bean形式存在，Spring通过ThreadLocal类将有状态的变量（例如数据库连接Connection）本地线程化，从而做到多线程状况下的安全。
 
 ## 6. spring注入bean的几种方式
 
@@ -304,11 +304,11 @@ ApplicationContext在BeanFactory的基础上还提供了更完整的框架功能
 
 #### 2). 基于注解
 
-​		使用@AutoWire配置自动装载模式.
+​使用@AutoWire配置自动装载模式.
 
-​		容器会自动装载一个后置处理器,当扫描到@AutoWire,@Resource或者@Inject时,就会在IoC容器查询需要的bean.
+​容器会自动装载一个后置处理器,当扫描到@AutoWire,@Resource或者@Inject时,就会在IoC容器查询需要的bean.
 
-​		首先根据类型进行查找,如果匹配到多个对象,使用名称进行查找.如果没有匹配到对象,会抛异常.解决方法:设置属性required=false(允许不被装配)。
+​首先根据类型进行查找,如果匹配到多个对象,使用名称进行查找.如果没有匹配到对象,会抛异常.解决方法:设置属性required=false(允许不被装配)。
 
 >   @Autowired可用于：构造函数、成员变量、Setter方法
 >
@@ -328,17 +328,17 @@ ApplicationContext在BeanFactory的基础上还提供了更完整的框架功能
 
 ## 8. spring事务实现方式和原理
 
-​		spring事务的本质就是数据库事务,就是调用连接对象的相关方法进行回滚和读取保存点.
+​spring事务的本质就是数据库事务,就是调用连接对象的相关方法进行回滚和读取保存点.
 
-​		spring根据注解扫描和xml文件中的配置,为指定的方法生成代理类,使用AOP进行事务开启,回滚和提交等操作的统一进行.
+​spring根据注解扫描和xml文件中的配置,为指定的方法生成代理类,使用AOP进行事务开启,回滚和提交等操作的统一进行.
 
-​		实际上是调用数据库本身的事务功能.
+​实际上是调用数据库本身的事务功能.
 
 ### (1). sprint事务种类
 
 #### 1). 编程式事务
 
-​		配置TransactionTemplate, 需要注入TransactionManager
+​配置TransactionTemplate, 需要注入TransactionManager
 
 ```xml
 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -353,7 +353,7 @@ ApplicationContext在BeanFactory的基础上还提供了更完整的框架功能
 </bean>
 ```
 
-​		将TransactionTemplate注入到业务层方法中,并使用
+​将TransactionTemplate注入到业务层方法中,并使用
 
 ```java
 public class ProTransExample {

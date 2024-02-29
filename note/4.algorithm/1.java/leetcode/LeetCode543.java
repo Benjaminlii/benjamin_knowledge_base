@@ -11,38 +11,38 @@ package com.Benjamin.leetcode;
  * @date: 20-2-5 下午3:51
  */
 public class LeetCode543 {
-	private static class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
+    private static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
 
-		TreeNode(int x) {
-			val = x;
-		}
-	}
+        TreeNode(int x) {
+            val = x;
+        }
+    }
 
-	private int ans = 0;
+    private int ans = 0;
 
-	public int diameterOfBinaryTree(TreeNode root) {
+    public int diameterOfBinaryTree(TreeNode root) {
         depth(root);
         return ans;
-	}
+    }
 
-	public int depth(TreeNode root) {
-		if (root == null) {
-			return 0;
-		} else {
+    public int depth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
             int leftDep = depth(root.left);
             int rightDep = depth(root.right);
-			ans = Math.max(ans, Math.abs(leftDep + rightDep));
+            ans = Math.max(ans, Math.abs(leftDep + rightDep));
             return Math.max(leftDep, rightDep) + 1;
-		}
-	}
+        }
+    }
 
     public static void main(String[] args) {
-	    TreeNode root = new TreeNode(1);
-	    root.left = new TreeNode(2);
-	    root.right = new TreeNode(3);
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
         root.left.right.left = new TreeNode(6);

@@ -17,23 +17,23 @@ import "fmt"
 // 输入：n = 0
 // 输出：1
 func numWays(n int) int {
-	mod := 1000000007
-	if n < 2 {
-		return 1
-	}
-	a := 1
-	b := 1
-	res := 0
-	for i := 2; i <= n; i++ {
-		res = (a + b) % mod
-		a = b
-		b = res
-	}
-	return res
+    mod := 1000000007
+    if n < 2 {
+        return 1
+    }
+    a := 1
+    b := 1
+    res := 0
+    for i := 2; i <= n; i++ {
+        res = (a + b) % mod
+        a = b
+        b = res
+    }
+    return res
 }
 
 func main() {
-	fmt.Println(numWays(2))
-	fmt.Println(numWays(7))
-	fmt.Println(numWays(0))
+    fmt.Println(numWays(2))
+    fmt.Println(numWays(7))
+    fmt.Println(numWays(0))
 }

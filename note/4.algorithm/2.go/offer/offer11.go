@@ -15,21 +15,21 @@ import "fmt"
 // 输入：numbers = [2,2,2,0,1]
 // 输出：0
 func minArray(numbers []int) int {
-	left, right, mid := 0, len(numbers)-1, 0
-	for left < right {
-		mid = (right-left)/2 + left
-		if numbers[right] > numbers[mid] {
-			right = mid
-		} else if numbers[right] < numbers[mid] {
-			left = mid + 1
-		} else {
-			right--
-		}
-	}
-	return numbers[left]
+    left, right, mid := 0, len(numbers)-1, 0
+    for left < right {
+        mid = (right-left)/2 + left
+        if numbers[right] > numbers[mid] {
+            right = mid
+        } else if numbers[right] < numbers[mid] {
+            left = mid + 1
+        } else {
+            right--
+        }
+    }
+    return numbers[left]
 }
 
 func main() {
-	fmt.Println(minArray([]int{3, 4, 5, 1, 2})) // 1
-	fmt.Println(minArray([]int{2, 2, 2, 0, 1})) // 2
+    fmt.Println(minArray([]int{3, 4, 5, 1, 2})) // 1
+    fmt.Println(minArray([]int{2, 2, 2, 0, 1})) // 2
 }
