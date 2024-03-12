@@ -10,7 +10,6 @@ import "fmt"
 //	  / \
 //	 2   6
 //	/ \
-//
 // 1   3
 func verifyPostorder(postorder []int) bool {
 	// 空节点和单个节点都视为排序树
