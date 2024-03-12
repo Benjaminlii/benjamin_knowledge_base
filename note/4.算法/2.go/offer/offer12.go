@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
-    "sync"
+	"fmt"
+	"sync"
 )
 
 // 剑指 Offer 12. 矩阵中的路径
@@ -19,66 +19,66 @@ import (
 // 输出：false
 
 func exist(board [][]byte, word string) bool {
-    res := false
-    wg := sync.WaitGroup{}
-    for row, v := range board {
-        for col := range v {
-            wg.Add(1)
-            go func(row, col int) {
-                defer wg.Done()
-                x := make([][]bool, 0, len(board))
-                for i := 0; i < len(board); i++ {
-                    x = append(x, make([]bool, len(board[i])))
-                }
-                if dfs(board, row, col, &x, []rune(word)) {
-                    res = true
-                }
-            }(row, col)
-        }
-    }
-    wg.Wait()
-    return res
+	res := false
+	wg := sync.WaitGroup{}
+	for row, v := range board {
+		for col := range v {
+			wg.Add(1)
+			go func(row, col int) {
+				defer wg.Done()
+				x := make([][]bool, 0, len(board))
+				for i := 0; i < len(board); i++ {
+					x = append(x, make([]bool, len(board[i])))
+				}
+				if dfs(board, row, col, &x, []rune(word)) {
+					res = true
+				}
+			}(row, col)
+		}
+	}
+	wg.Wait()
+	return res
 
 }
 
 func dfs(board [][]byte, row, col int, mark *[][]bool, runes []rune) bool {
-    if len(runes) == 0 {
-        return true
-    }
-    if row < 0 || row >= len(board) || col < 0 || col >= len(board[row]) {
-        return false
-    }
-    if (*mark)[row][col] {
-        return false
-    }
-    (*mark)[row][col] = true
-    defer func() {
-        (*mark)[row][col] = false
-    }()
-    if board[row][col] == byte(runes[0]) {
-        return dfs(board, row+1, col, mark, runes[1:]) ||
-            dfs(board, row, col+1, mark, runes[1:]) ||
-            dfs(board, row-1, col, mark, runes[1:]) ||
-            dfs(board, row, col-1, mark, runes[1:])
-    } else {
-        return false
-    }
+	if len(runes) == 0 {
+		return true
+	}
+	if row < 0 || row >= len(board) || col < 0 || col >= len(board[row]) {
+		return false
+	}
+	if (*mark)[row][col] {
+		return false
+	}
+	(*mark)[row][col] = true
+	defer func() {
+		(*mark)[row][col] = false
+	}()
+	if board[row][col] == byte(runes[0]) {
+		return dfs(board, row+1, col, mark, runes[1:]) ||
+			dfs(board, row, col+1, mark, runes[1:]) ||
+			dfs(board, row-1, col, mark, runes[1:]) ||
+			dfs(board, row, col-1, mark, runes[1:])
+	} else {
+		return false
+	}
 
 }
 
 func main() {
-    fmt.Println(exist([][]byte{
-        {'A', 'B', 'C', 'E'},
-        {'S', 'F', 'C', 'S'},
-        {'A', 'D', 'E', 'E'},
-    }, "ABCCED")) // true
-    fmt.Println(exist([][]byte{
-        {'A', 'B', 'C', 'E'},
-        {'S', 'F', 'C', 'S'},
-        {'A', 'D', 'E', 'E'},
-    }, "ABCB")) // false
-    fmt.Println(exist([][]byte{
-        {'a', 'b'},
-        {'c', 'd'},
-    }, "abcd")) // false
+	fmt.Println(exist([][]byte{
+		{'A', 'B', 'C', 'E'},
+		{'S', 'F', 'C', 'S'},
+		{'A', 'D', 'E', 'E'},
+	}, "ABCCED")) // true
+	fmt.Println(exist([][]byte{
+		{'A', 'B', 'C', 'E'},
+		{'S', 'F', 'C', 'S'},
+		{'A', 'D', 'E', 'E'},
+	}, "ABCB")) // false
+	fmt.Println(exist([][]byte{
+		{'a', 'b'},
+		{'c', 'd'},
+	}, "abcd")) // false
 }

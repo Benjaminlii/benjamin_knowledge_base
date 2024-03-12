@@ -8,41 +8,43 @@ import "fmt"
 // 示例:
 // 现有矩阵 matrix 如下：
 // [
-//     [1,   4,  7, 11, 15],
-//     [2,   5,  8, 12, 19],
-//     [3,   6,  9, 16, 22],
-//     [10, 13, 14, 17, 24],
-//     [18, 21, 23, 26, 30]
+//
+//	[1,   4,  7, 11, 15],
+//	[2,   5,  8, 12, 19],
+//	[3,   6,  9, 16, 22],
+//	[10, 13, 14, 17, 24],
+//	[18, 21, 23, 26, 30]
+//
 // ]
 // 给定 target = 5，返回 true。
 // 给定 target = 20，返回 false。
 func findNumberIn2DArray(matrix [][]int, target int) bool {
-    res := false
-    for i, j := len(matrix)-1, 0; i >= 0 && j < len(matrix[0]); {
-        getNum := matrix[i][j]
-        if getNum == target {
-            res = true
-            break
-        } else if getNum > target {
-            i--
-        } else {
-            j++
-        }
-    }
-    return res
+	res := false
+	for i, j := len(matrix)-1, 0; i >= 0 && j < len(matrix[0]); {
+		getNum := matrix[i][j]
+		if getNum == target {
+			res = true
+			break
+		} else if getNum > target {
+			i--
+		} else {
+			j++
+		}
+	}
+	return res
 }
 
 func main() {
-    fmt.Println(findNumberIn2DArray([][]int{
-        {1, 2, 8, 9},
-        {2, 4, 9, 12},
-        {4, 7, 10, 13},
-        {6, 8, 11, 15},
-    }, 7))
-    fmt.Println(findNumberIn2DArray([][]int{
-        {1, 2, 8, 9},
-        {2, 4, 9, 12},
-        {4, 7, 10, 13},
-        {6, 8, 11, 15},
-    }, 3))
+	fmt.Println(findNumberIn2DArray([][]int{
+		{1, 2, 8, 9},
+		{2, 4, 9, 12},
+		{4, 7, 10, 13},
+		{6, 8, 11, 15},
+	}, 7))
+	fmt.Println(findNumberIn2DArray([][]int{
+		{1, 2, 8, 9},
+		{2, 4, 9, 12},
+		{4, 7, 10, 13},
+		{6, 8, 11, 15},
+	}, 3))
 }

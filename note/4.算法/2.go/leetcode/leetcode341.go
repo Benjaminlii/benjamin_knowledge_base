@@ -2,35 +2,36 @@ package main
 
 // NestedInteger [[1,2],2,[1,[1,2,3]]]
 type NestedInteger struct {
-    value  int
-    isList bool
+	value  int
+	isList bool
 
-    nesteds []*NestedInteger
+	nesteds []*NestedInteger
 }
+
 func (this *NestedInteger) IsInteger() bool {
-    return !this.isList
+	return !this.isList
 }
 func (this *NestedInteger) GetInteger() int {
-    if this.isList {
-        panic("NestedInteger holds a nested list, cannot get integer")
-    }
-    return this.value
+	if this.isList {
+		panic("NestedInteger holds a nested list, cannot get integer")
+	}
+	return this.value
 }
 func (this *NestedInteger) SetInteger(value int) {
-    this.value = int(value)
-    this.isList = false
-    this.nesteds = nil
+	this.value = int(value)
+	this.isList = false
+	this.nesteds = nil
 }
 func (this *NestedInteger) Add(elem NestedInteger) {
-    if this.isList {
-        this.nesteds = append(this.nesteds, &elem)
-    } else {
-        this.isList = true
-        this.nesteds = []*NestedInteger{&elem}
-    }
+	if this.isList {
+		this.nesteds = append(this.nesteds, &elem)
+	} else {
+		this.isList = true
+		this.nesteds = []*NestedInteger{&elem}
+	}
 }
 func (this *NestedInteger) GetList() []*NestedInteger {
-    return this.nesteds
+	return this.nesteds
 }
 
 // 给你一个嵌套的整数列表 nestedList 。每个元素要么是一个整数，要么是一个列表；该列表的元素也可能是整数或者是其他列表。
@@ -50,48 +51,46 @@ func (this *NestedInteger) GetList() []*NestedInteger {
 // 输入：nestedList = [[1,1],2,[1,1]]
 // 输出：[1,1,2,1,1]
 // 解释：通过重复调用 next 直到 hasNext 返回 false，next 返回的元素的顺序应该是: [1,1,2,1,1]。
-// 
+//
 // 示例 2：
 // 输入：nestedList = [1,[4,[6]]]
 // 输出：[1,4,6]
 // 解释：通过重复调用 next 直到 hasNext 返回 false，next 返回的元素的顺序应该是: [1,4,6]。
 
 type NestedIterator struct {
-    // 将列表视作一个队列，栈中直接存储该队列
-    stack [][]*NestedInteger
+	// 将列表视作一个队列，栈中直接存储该队列
+	stack [][]*NestedInteger
 }
 
 func Constructor(nestedList []*NestedInteger) *NestedIterator {
-    return &NestedIterator{[][]*NestedInteger{nestedList}}
+	return &NestedIterator{[][]*NestedInteger{nestedList}}
 }
 
 func (it *NestedIterator) Next() int {
-    // 由于保证调用 Next 之前会调用 HasNext，直接返回栈顶列表的队首元素，将其弹出队首并返回
-    queue := it.stack[len(it.stack)-1]
-    val := queue[0].GetInteger()
-    it.stack[len(it.stack)-1] = queue[1:]
-    return val
+	// 由于保证调用 Next 之前会调用 HasNext，直接返回栈顶列表的队首元素，将其弹出队首并返回
+	queue := it.stack[len(it.stack)-1]
+	val := queue[0].GetInteger()
+	it.stack[len(it.stack)-1] = queue[1:]
+	return val
 }
 
 func (it *NestedIterator) HasNext() bool {
-    for len(it.stack) > 0 {
-        queue := it.stack[len(it.stack)-1]
-        if len(queue) == 0 { // 当前队列为空，出栈
-            it.stack = it.stack[:len(it.stack)-1]
-            continue
-        }
-        nest := queue[0]
-        if nest.IsInteger() {
-            return true
-        }
-        // 若队首元素为列表，则将其弹出队列并入栈
-        it.stack[len(it.stack)-1] = queue[1:]
-        it.stack = append(it.stack, nest.GetList())
-    }
-    return false
+	for len(it.stack) > 0 {
+		queue := it.stack[len(it.stack)-1]
+		if len(queue) == 0 { // 当前队列为空，出栈
+			it.stack = it.stack[:len(it.stack)-1]
+			continue
+		}
+		nest := queue[0]
+		if nest.IsInteger() {
+			return true
+		}
+		// 若队首元素为列表，则将其弹出队列并入栈
+		it.stack[len(it.stack)-1] = queue[1:]
+		it.stack = append(it.stack, nest.GetList())
+	}
+	return false
 }
-
-
 
 func main() {
 	input := []*NestedInteger{
@@ -115,7 +114,7 @@ func main() {
 		res = append(res, iterator.Next())
 	}
 
-    for _, r := range res {
-        print(r)
-    }
+	for _, r := range res {
+		print(r)
+	}
 }

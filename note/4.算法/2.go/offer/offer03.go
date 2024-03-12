@@ -12,16 +12,16 @@ import "fmt"
 // [2, 3, 1, 0, 2, 5, 3]
 // 输出：2 或 3
 func findRepeatNumber(numbers []int) int {
-    mark := make([]int, len(numbers))
-    for _, v := range numbers {
-        if mark[v] > 0 {
-            return v
-        }
-        mark[v]++
-    }
-    return -1
+	mark := make([]int, len(numbers))
+	for _, v := range numbers {
+		if mark[v] > 0 {
+			return v
+		}
+		mark[v]++
+	}
+	return -1
 }
 
 func main() {
-    fmt.Println(findRepeatNumber([]int{2, 3, 1, 0, 2, 5, 3}))
+	fmt.Println(findRepeatNumber([]int{2, 3, 1, 0, 2, 5, 3}))
 }
